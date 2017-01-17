@@ -49,8 +49,11 @@ class TestResultPrinter implements PHPUnit_Framework_TestListener
 
     public function startTest(PHPUnit_Framework_Test $test)
     {
-        exec('rm -rf ./log/error/');
-        exec('mkdir ./log/error/');
+        $logFiles = glob("log/error/*.log");
+
+        foreach ($logFiles as $fileName) {
+            file_put_contents($fileName, '');
+        }
     }
 
     public function endTest(PHPUnit_Framework_Test $test, $time)
