@@ -3,7 +3,7 @@
     "description": "Helper classes for testing with phpunit",
     "type": "library",
     "require": {
-        "phpunit/phpunit": "5.2.*",
+        "phpunit/phpunit": "5.7.*",
         "monolog/monolog": "1.10.*"
     },
     "autoload": {
