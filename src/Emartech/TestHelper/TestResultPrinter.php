@@ -3,24 +3,26 @@
 namespace Emartech\TestHelper;
 
 use Exception;
-use PHPUnit_Framework_AssertionFailedError;
-use PHPUnit_Framework_Test;
-use PHPUnit_Framework_TestListener;
-use PHPUnit_Framework_TestSuite;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestListener;
+use PHPUnit\Framework\Warning;
+use PHPUnit\Framework\TestSuite;
 
-class TestResultPrinter implements PHPUnit_Framework_TestListener
+class TestResultPrinter implements TestListener
 {
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addError(Test $test, Exception $e, $time)
     {
         $this->getLogFileContents($test);
     }
 
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    public function addFailure(Test $test, AssertionFailedError $e, $time)
     {
         $this->getLogFileContents($test);
     }
 
-    private function getLogFileContents(PHPUnit_Framework_Test $test)
+    private function getLogFileContents(TestCase $test)
     {
         echo "\nTest '{$test->getName()}' failed.\n";
         echo "\nLogs:\n";
@@ -35,19 +37,19 @@ class TestResultPrinter implements PHPUnit_Framework_TestListener
         echo "\n";
     }
 
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addIncompleteTest(Test $test, Exception $e, $time)
     {
     }
 
-    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addRiskyTest(Test $test, Exception $e, $time)
     {
     }
 
-    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addSkippedTest(Test $test, Exception $e, $time)
     {
     }
 
-    public function startTest(PHPUnit_Framework_Test $test)
+    public function startTest(Test $test)
     {
         $logFiles = glob("log/error/*.log");
 
@@ -56,15 +58,19 @@ class TestResultPrinter implements PHPUnit_Framework_TestListener
         }
     }
 
-    public function endTest(PHPUnit_Framework_Test $test, $time)
+    public function endTest(Test $test, $time)
     {
     }
 
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function startTestSuite(TestSuite $suite)
     {
     }
 
-    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function endTestSuite(TestSuite $suite)
+    {
+    }
+
+    public function addWarning(Test $test, Warning $e, $time)
     {
     }
 }

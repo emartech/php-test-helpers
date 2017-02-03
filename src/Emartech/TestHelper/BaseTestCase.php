@@ -4,11 +4,11 @@ namespace Emartech\TestHelper;
 
 use Monolog\Handler\NullHandler;
 use Monolog\Logger;
-use PHPUnit_Framework_Constraint;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 
-abstract class BaseTestCase extends PHPUnit_Framework_TestCase
+abstract class BaseTestCase extends TestCase
 {
     protected $dummyLogger;
 
@@ -34,13 +34,18 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase
      */
     protected function partialMock($originalClassName, $methods)
     {
-        return $this->getMock($originalClassName, $methods, [], '', false, false, true, false);
+        return $this->getMockBuilder($originalClassName)
+            ->setMethods($methods)
+            ->setConstructorArgs([])
+            ->setMockClassName('')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
 
     /**
      * @param array $array
-     * @return PHPUnit_Framework_Constraint
+     * @return Constraint
      */
     protected function structure(array $array)
     {

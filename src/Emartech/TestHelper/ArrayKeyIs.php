@@ -2,10 +2,10 @@
 
 namespace Emartech\TestHelper;
 
-use PHPUnit_Framework_Constraint;
-use PHPUnit_Framework_Constraint_IsEqual;
+use PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Framework\Constraint\IsEqual;
 
-class ArrayKeyIs extends PHPUnit_Framework_Constraint
+class ArrayKeyIs extends Constraint
 {
     /**
      * @var string
@@ -13,7 +13,7 @@ class ArrayKeyIs extends PHPUnit_Framework_Constraint
     private $key;
 
     /**
-     * @var PHPUnit_Framework_Constraint
+     * @var Constraint
      */
     private $valueConstraint;
 
@@ -21,9 +21,9 @@ class ArrayKeyIs extends PHPUnit_Framework_Constraint
     {
         parent::__construct();
         $this->key = $key;
-        $this->valueConstraint = $valueConstraint instanceof PHPUnit_Framework_Constraint
+        $this->valueConstraint = $valueConstraint instanceof Constraint
             ? $valueConstraint
-            : new PHPUnit_Framework_Constraint_IsEqual($valueConstraint);
+            : new IsEqual($valueConstraint);
     }
 
     /**
