@@ -19,12 +19,17 @@ abstract class IntegrationTestCase extends BaseTestCase
      */
     protected $spyLogger;
 
+    /**
+     * @var Client
+     */
+    protected $client;
 
     protected function setUp()
     {
         parent::setUp();
         $this->serviceHost = getenv('INTEGRATION_TEST_HOST');
         $this->spyLogger = new SpyLogger();
+        $this->client = new Client(['cookies' => true]);
     }
 
     /**
@@ -37,7 +42,7 @@ abstract class IntegrationTestCase extends BaseTestCase
 
     protected function get($uri)
     {
-        return (new Client())->get($this->serviceHost.$uri);
+        return $this->client->get($this->serviceHost.$uri);
     }
 
     protected function getWithEscher(string $uri)
@@ -56,7 +61,7 @@ abstract class IntegrationTestCase extends BaseTestCase
             ''
         );
 
-        return (new Client())->get($url, ['headers' => $escherSignedHeaders]);
+        return $this->client->get($url, ['headers' => $escherSignedHeaders]);
     }
 
     protected function putWithEscher(string $uri, string $body = '')
@@ -75,7 +80,7 @@ abstract class IntegrationTestCase extends BaseTestCase
             ''
         );
 
-        return (new Client())->put($url, ['headers' => $escherSignedHeaders, 'body' => $body]);
+        return $this->client->put($url, ['headers' => $escherSignedHeaders, 'body' => $body]);
     }
 
     protected function requestWithJwt(string $method, string $uri, string $body = '', array $formParams = [])
@@ -87,7 +92,7 @@ abstract class IntegrationTestCase extends BaseTestCase
         if (!empty($formParams)) {
             $options['form_params'] = $formParams;
         }
-        return (new Client())->request($method, $url, $options);
+        return $this->client->request($method, $url, $options);
     }
 
     protected function deleteWithJwt(string $uri, string $body = '')
