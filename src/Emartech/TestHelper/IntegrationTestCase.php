@@ -32,9 +32,6 @@ abstract class IntegrationTestCase extends BaseTestCase
         $this->client = new Client(['cookies' => true]);
     }
 
-    /**
-     * @param $response
-     */
     protected function assertOK(ResponseInterface $response, $message = '')
     {
         $this->assertEquals(200, $response->getStatusCode(), "HTTP status code is not OK" . $message);
@@ -48,38 +45,14 @@ abstract class IntegrationTestCase extends BaseTestCase
     protected function getWithEscher(string $uri)
     {
         $url = $this->serviceHost.$uri;
-        $escherCredentials = json_decode(getenv('ESCHER_SUITE_KEY_DB'), true);
-        $escherKey = array_keys($escherCredentials)[0];
-        $escherProvider = new EscherProvider(getenv('ESCHER_SUITE_CREDENTIAL_SCOPE'), $escherKey, $escherCredentials[$escherKey], []);
-
-        $escher = $escherProvider->createEscher();
-        $escherSignedHeaders = $escher->signRequest(
-            $escherProvider->getEscherKey(),
-            $escherProvider->getEscherSecret(),
-            'GET',
-            $url,
-            ''
-        );
-
+        $escherSignedHeaders = $this->escherSignHeaders($url, 'GET');
         return $this->client->get($url, ['headers' => $escherSignedHeaders]);
     }
 
     protected function putWithEscher(string $uri, string $body = '')
     {
         $url = $this->serviceHost.$uri;
-        $escherCredentials = json_decode(getenv('ESCHER_SUITE_KEY_DB'), true);
-        $escherKey = array_keys($escherCredentials)[0];
-        $escherProvider = new EscherProvider(getenv('ESCHER_SUITE_CREDENTIAL_SCOPE'), $escherKey, $escherCredentials[$escherKey], []);
-
-        $escher = $escherProvider->createEscher();
-        $escherSignedHeaders = $escher->signRequest(
-            $escherProvider->getEscherKey(),
-            $escherProvider->getEscherSecret(),
-            'PUT',
-            $url,
-            ''
-        );
-
+        $escherSignedHeaders = $this->escherSignHeaders($url, 'PUT');
         return $this->client->put($url, ['headers' => $escherSignedHeaders, 'body' => $body]);
     }
 
@@ -125,5 +98,26 @@ abstract class IntegrationTestCase extends BaseTestCase
     protected function getWithAuthentication(int $staffId, string $redirectUrl = ''): ResponseInterface
     {
         return $this->getWithEscher("/login/{$staffId}/".($redirectUrl ? "?redirect_url={$redirectUrl}" : ''));
+    }
+
+    private function createEscherProvider(): EscherProvider
+    {
+        $escherCredentials = json_decode(getenv('ESCHER_SUITE_KEY_DB'), true);
+        $escherKey = array_keys($escherCredentials)[0];
+        $escherProvider = new EscherProvider(getenv('ESCHER_SUITE_CREDENTIAL_SCOPE'), $escherKey, $escherCredentials[$escherKey], []);
+        return $escherProvider;
+    }
+
+    private function escherSignHeaders(string $url, string $method)
+    {
+        $escherProvider = $this->createEscherProvider();
+        $escher = $escherProvider->createEscher();
+        return $escher->signRequest(
+            $escherProvider->getEscherKey(),
+            $escherProvider->getEscherSecret(),
+            $method,
+            $url,
+            ''
+        );
     }
 }
