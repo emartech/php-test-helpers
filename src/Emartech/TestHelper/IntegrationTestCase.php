@@ -42,6 +42,15 @@ abstract class IntegrationTestCase extends BaseTestCase
         return $this->client->get($this->serviceHost.$uri);
     }
 
+    protected function post($uri, $postValues = [])
+    {
+        $options = [];
+        if (!empty($postValues)) {
+            $options['form_params'] = $postValues;
+        }
+        return $this->client->post($this->serviceHost.$uri, $options);
+    }
+
     protected function getWithEscher(string $uri)
     {
         $url = $this->serviceHost.$uri;
