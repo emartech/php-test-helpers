@@ -116,4 +116,14 @@ abstract class IntegrationTestCase extends BaseTestCase
         $this->assertTrue(isset($json['success']));
         $this->assertEquals($expected, $json['success']);
     }
+
+    protected function authenticate(int $staffId): ResponseInterface
+    {
+        return $this->getWithAuthentication($staffId);
+    }
+
+    protected function getWithAuthentication(int $staffId, string $redirectUrl = ''): ResponseInterface
+    {
+        return $this->getWithEscher("/login/{$staffId}/".($redirectUrl ? "?redirect_url={$redirectUrl}" : ''));
+    }
 }
