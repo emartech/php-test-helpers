@@ -58,6 +58,13 @@ abstract class IntegrationTestCase extends BaseTestCase
         return $this->client->get($url, ['headers' => $escherSignedHeaders]);
     }
 
+    protected function postWithEscher(string $uri, string $body = '')
+    {
+        $url = $this->serviceHost.$uri;
+        $escherSignedHeaders = $this->escherSignHeaders($url, 'POST', $body);
+        return $this->client->post($url, ['headers' => $escherSignedHeaders, 'body' => $body]);
+    }
+
     protected function putWithEscher(string $uri, string $body = '')
     {
         $url = $this->serviceHost.$uri;
@@ -107,7 +114,7 @@ abstract class IntegrationTestCase extends BaseTestCase
         return $escherProvider;
     }
 
-    private function escherSignHeaders(string $url, string $method)
+    private function escherSignHeaders(string $url, string $method, string $body = '')
     {
         $escherProvider = $this->createEscherProvider();
         $escher = $escherProvider->createEscher();
@@ -116,7 +123,7 @@ abstract class IntegrationTestCase extends BaseTestCase
             $escherProvider->getEscherSecret(),
             $method,
             $url,
-            ''
+            $body
         );
     }
 }
