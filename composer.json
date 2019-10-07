@@ -1,24 +1,28 @@
 {
-    "name": "emartech/php-test-helpers",
-    "description": "Helper classes for testing with phpunit",
-    "type": "library",
-    "require": {
-        "phpunit/phpunit": "^6.0",
-        "monolog/monolog": "*",
-        "guzzlehttp/guzzle": "*",
-        "emartech/php-jwt-helper": "*",
-        "emartech/escher": "*"
-    },
-    "autoload": {
-        "psr-4": {"": "src/"}
-    },
-    "authors": [
-        {
-            "name": "fqqdk",
-            "email": "fqqdk1@gmail.com"
-        }
-    ],
-    "license": [
-        "MIT"
-    ]
+  "name": "emartech/php-test-helpers",
+  "description": "Helper classes for testing with phpunit",
+  "type": "library",
+  "require": {
+    "php": "^7.0",
+    "ext-json": "*",
+    "phpunit/phpunit": "^6.0",
+    "monolog/monolog": "*",
+    "guzzlehttp/guzzle": "*",
+    "emartech/php-jwt-helper": "*",
+    "emartech/escher": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "fqqdk",
+      "email": "fqqdk1@gmail.com"
+    }
+  ],
+  "license": [
+    "MIT"
+  ]
 }
