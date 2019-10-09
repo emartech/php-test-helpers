@@ -14,24 +14,24 @@ class TestResultPrinter implements TestListener
 {
     public function addError(Test $test, Exception $e, $time)
     {
-        $this->getLogFileContents($test);
+        $this->getLogFileContents($this->getNameOf($test));
     }
 
     public function addFailure(Test $test, AssertionFailedError $e, $time)
     {
-        $this->getLogFileContents($test);
+        $this->getLogFileContents($this->getNameOf($test));
     }
 
-    private function getLogFileContents(TestCase $test)
+    private function getLogFileContents(string $testName)
     {
-        echo "\nTest '{$test->getName()}' failed.\n";
+        echo "\nTest {$testName} failed.\n";
         echo "\nLogs:\n";
 
         $logFiles = glob("log/error/*.log");
 
         foreach ($logFiles as $fileName) {
             echo "\nFile: $fileName\n";
-            echo file_get_contents($fileName)."\n";
+            echo file_get_contents($fileName) . "\n";
         }
 
         echo "\n";
@@ -72,5 +72,14 @@ class TestResultPrinter implements TestListener
 
     public function addWarning(Test $test, Warning $e, $time)
     {
+    }
+
+    private function getNameOf(Test $test): string
+    {
+        if ($test instanceof TestCase) {
+            return "'" . $test->getName() . "'";
+        } else {
+            return "with unknown name";
+        }
     }
 }
