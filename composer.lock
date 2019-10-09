@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "994b68d4e0a7b5d9b6d141c3feb87f98",
+    "content-hash": "b6e4ab60be977a296c6613b85ad5b66d",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -198,6 +198,44 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2016-07-18T04:51:16+00:00"
+        },
+        {
+            "name": "fqqdk/packagist-publisher",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fqqdk/packagist-publisher.git",
+                "reference": "e175dfe0056fb35d388811cf1c7f4ae2c2ebf110"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fqqdk/packagist-publisher/zipball/e175dfe0056fb35d388811cf1c7f4ae2c2ebf110",
+                "reference": "e175dfe0056fb35d388811cf1c7f4ae2c2ebf110",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "guzzlehttp/guzzle": "6.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.8"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Fqqdk\\Packagist\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fqqdk\\Packagist\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A handy composer script to be used to publish your package to packagist",
+            "time": "2019-10-02T14:32:30+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1094,6 +1132,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2017-03-03T06:30:20+00:00"
         },
         {
@@ -1809,6 +1848,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.0",
+        "ext-json": "*"
+    },
     "platform-dev": []
 }

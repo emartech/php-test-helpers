@@ -11,6 +11,9 @@
     "emartech/php-jwt-helper": "*",
     "emartech/escher": "*"
   },
+  "require-dev": {
+    "fqqdk/packagist-publisher": "^1.2"
+  },
   "autoload": {
     "psr-4": {
       "Emartech\\TestHelper\\": "src/",
