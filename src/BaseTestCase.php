@@ -107,6 +107,11 @@ abstract class BaseTestCase extends TestCase
         return new ExceptionMessageConstraint($messageConstraint, $omitTrace);
     }
 
+    public function exceptionHasCode(Constraint $messageConstraint, bool $omitTrace = false): Constraint
+    {
+        return new ExceptionCodeConstraint($messageConstraint, $omitTrace);
+    }
+
     private function boxExceptionConstraint($exceptionConstraint)
     {
         return $exceptionConstraint instanceof Constraint

@@ -4,15 +4,15 @@ namespace Emartech\TestHelper;
 
 use Throwable;
 
-class ExceptionMessageConstraint extends ExceptionConstraint
+class ExceptionCodeConstraint extends ExceptionConstraint
 {
     protected function getRelevantPart(Throwable $other)
     {
-        return $other->getMessage();
+        return $other->getCode();
     }
 
     protected function getRelevantPartName(): string
     {
-        return 'message';
+        return 'code';
     }
 }
