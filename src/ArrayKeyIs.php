@@ -19,7 +19,6 @@ class ArrayKeyIs extends Constraint
 
     public function __construct($key, $valueConstraint)
     {
-        parent::__construct();
         $this->key = $key;
         $this->valueConstraint = $valueConstraint instanceof Constraint
             ? $valueConstraint
@@ -30,7 +29,7 @@ class ArrayKeyIs extends Constraint
     * @param mixed $other Value or object to evaluate.
      * @return bool
      */
-    protected function matches($other)
+    protected function matches($other): bool
     {
         return isset($other[$this->key]) && $this->valueConstraint->evaluate($other[$this->key], '', true);
     }
@@ -40,7 +39,7 @@ class ArrayKeyIs extends Constraint
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return "\n\tis an array that has the key '$this->key' and the corresponding value {$this->valueConstraint->toString()}";
     }

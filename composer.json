@@ -3,16 +3,16 @@
   "description": "Helper classes for testing with phpunit",
   "type": "library",
   "require": {
-    "php": "^7.0",
+    "php": "^7.3",
     "ext-json": "*",
-    "phpunit/phpunit": "^6.0",
-    "monolog/monolog": "*",
-    "guzzlehttp/guzzle": "*",
+    "phpunit/phpunit": "^8.4",
+    "monolog/monolog": "^2",
+    "guzzlehttp/guzzle": "^6.3",
     "emartech/php-jwt-helper": "*",
-    "emartech/escher": "*"
+    "emartech/escher": "^1.2"
   },
   "require-dev": {
-    "fqqdk/packagist-publisher": "^1.2"
+    "fqqdk/packagist-publisher": "*"
   },
   "autoload": {
     "psr-4": {

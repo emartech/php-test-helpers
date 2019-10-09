@@ -15,11 +15,10 @@ class ObjectHasExactClass extends Constraint
 
     public function __construct($expectedClass)
     {
-        parent::__construct();
         $this->expectedClass = $expectedClass;
     }
 
-    public function matches($other)
+    public function matches($other): bool
     {
         if (!is_object($other)) {
             return false;
@@ -27,7 +26,7 @@ class ObjectHasExactClass extends Constraint
         return get_class($other) === $this->expectedClass;
     }
 
-    public function toString()
+    public function toString(): string
     {
         return PHP_EOL . "\tis strictly an instance (and not of a descendant class) of '{$this->expectedClass}'";
     }

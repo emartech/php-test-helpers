@@ -26,9 +26,12 @@ class ArrayKeyIsTest extends BaseTestCase
     public function matches_KeyIsPresentButValueDoesNotMatchValueConstraint_EvaluationFails()
     {
         $this->assertAssertionFailsIn(
-            $this->exceptionHasMessage($this->stringContains("and the corresponding value is equal to <string:value>"), true),
+            $this->exceptionHasMessage($this->logicalAnd(
+                $this->stringContains("and the corresponding value is equal to"),
+                $this->stringContains('the_value')
+            ), true),
             function () {
-                (new ArrayKeyIs('key', $this->equalTo('value')))->evaluate(['key' => 'different value']);
+                (new ArrayKeyIs('key', $this->equalTo('the_value')))->evaluate(['key' => 'different value']);
             }
         );
     }
@@ -38,7 +41,7 @@ class ArrayKeyIsTest extends BaseTestCase
      */
     public function matches_KeyIsPresentAndValueMatchesValueConstraint_EvaluationSucceeds()
     {
-        (new ArrayKeyIs('key', $this->equalTo('value')))->evaluate(['key' => 'value']);
+        (new ArrayKeyIs('key', $this->equalTo('the_value')))->evaluate(['key' => 'the_value']);
     }
 
     /**
@@ -46,6 +49,6 @@ class ArrayKeyIsTest extends BaseTestCase
      */
     public function matches_ValueConstraintNotAConstraintObject_ValueConstraintAutoBoxed()
     {
-        (new ArrayKeyIs('key', 'value'))->evaluate(['key' => 'value']);
+        (new ArrayKeyIs('key', 'the_value'))->evaluate(['key' => 'the_value']);
     }
 }

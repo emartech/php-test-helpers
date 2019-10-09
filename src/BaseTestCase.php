@@ -6,15 +6,15 @@ use Exception;
 use Monolog\Handler\NullHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit_Framework_MockObject_MockObject;
 
 abstract class BaseTestCase extends TestCase
 {
     protected $dummyLogger;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->dummyLogger = new Logger('dummy', array(new NullHandler()));
@@ -22,7 +22,7 @@ abstract class BaseTestCase extends TestCase
 
     /**
      * @param $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function mock($originalClassName)
     {
@@ -31,12 +31,13 @@ abstract class BaseTestCase extends TestCase
 
     /**
      * @param $originalClassName
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @param array $methods
+     * @return MockObject
      */
-    protected function partialMock($originalClassName, $methods)
+    protected function partialMock($originalClassName, array $methods): MockObject
     {
         return $this->getMockBuilder($originalClassName)
-            ->setMethods($methods)
+            ->onlyMethods($methods)
             ->setConstructorArgs([])
             ->setMockClassName('')
             ->disableOriginalConstructor()
