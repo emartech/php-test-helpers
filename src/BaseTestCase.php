@@ -87,18 +87,23 @@ abstract class BaseTestCase extends TestCase
 
     protected function assertAssertionFailsIn($exceptionConstraint, callable $callback)
     {
+        $exceptionConstraint = $this->boxExceptionConstraint($exceptionConstraint);
         try {
             call_user_func($callback);
         } catch (AssertionFailedError $ex) {
-            $this->assertThat($ex, $exceptionConstraint, 'The assertion failed not in the expected way.');
+            try {
+                $this->assertThat($ex, $exceptionConstraint, 'The assertion failed not in the expected way.');
+            } catch (\Throwable $t) {
+                print $t; die;
+            }
             return;
         }
         $this->fail('The assertion should have failed, but did not.');
     }
 
-    public function exceptionHasMessage(Constraint $messageConstraint): Constraint
+    public function exceptionHasMessage(Constraint $messageConstraint, bool $omitTrace = false): Constraint
     {
-        return new ExceptionMessageConstraint($messageConstraint);
+        return new ExceptionMessageConstraint($messageConstraint, $omitTrace);
     }
 
     private function boxExceptionConstraint($exceptionConstraint)

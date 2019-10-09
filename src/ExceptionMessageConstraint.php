@@ -12,22 +12,28 @@ class ExceptionMessageConstraint extends Constraint
      */
     private $messageConstraint;
 
+    /**
+     * @var bool
+     */
+    private $omitTrace;
 
-    public function __construct(Constraint $messageConstraint)
+
+    public function __construct(Constraint $messageConstraint, bool $omitTrace = false)
     {
         parent::__construct();
         $this->messageConstraint = $messageConstraint;
+        $this->omitTrace = $omitTrace;
     }
 
-    public function matches($other)
+    protected function matches($other)
     {
         return $other instanceof Throwable
-            && $this->messageConstraint->matches($other->getMessage());
+            && $this->messageConstraint->evaluate($other->getMessage(), '', true);
     }
 
     public function toString()
     {
-        return "\n\tis an exception that has the message that {$this->messageConstraint->toString()}";
+        return "\n\tis a Throwable that has the message that {$this->messageConstraint->toString()}";
     }
 
     /**
@@ -39,7 +45,10 @@ class ExceptionMessageConstraint extends Constraint
         if ($other instanceof Throwable) {
             $class = get_class($other);
             $message = $this->exporter->export($other->getMessage());
-            $export = "a Throwable({$class}) with message {$message} and trace:\n" . $other->getTraceAsString();
+            $export = "a Throwable({$class}) with message {$message}";
+            if (!$this->omitTrace) {
+                $export .= " and trace:\n" . $other->getTraceAsString();
+            }
         } else {
             $export = $this->exporter->shortenedExport($other);
         }

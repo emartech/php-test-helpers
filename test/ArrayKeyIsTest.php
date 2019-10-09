@@ -13,7 +13,7 @@ class ArrayKeyIsTest extends BaseTestCase
     public function matches_KeyMissing_EvaluationFails()
     {
         $this->assertAssertionFailsIn(
-            $this->exceptionHasMessage($this->stringContains("is an array that has the key 'key'")),
+            $this->exceptionHasMessage($this->stringContains("is an array that has the key 'key'"), true),
             function () {
                 (new ArrayKeyIs('key', $this->anything()))->evaluate([]);
             }
@@ -26,7 +26,7 @@ class ArrayKeyIsTest extends BaseTestCase
     public function matches_KeyIsPresentButValueDoesNotMatchValueConstraint_EvaluationFails()
     {
         $this->assertAssertionFailsIn(
-            $this->exceptionHasMessage($this->stringContains("and the corresponding value is equal to <string:value>")),
+            $this->exceptionHasMessage($this->stringContains("and the corresponding value is equal to <string:value>"), true),
             function () {
                 (new ArrayKeyIs('key', $this->equalTo('value')))->evaluate(['key' => 'different value']);
             }
