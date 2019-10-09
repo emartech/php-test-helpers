@@ -13,8 +13,12 @@
   },
   "autoload": {
     "psr-4": {
-      "": "src/"
+      "Emartech\\TestHelper\\": "src/",
+      "Test\\Emartech\\TestHelper\\": "test/"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --dont-report-useless-tests test"
   },
   "authors": [
     {
