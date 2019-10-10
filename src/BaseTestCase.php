@@ -92,11 +92,7 @@ abstract class BaseTestCase extends TestCase
         try {
             call_user_func($callback);
         } catch (AssertionFailedError $ex) {
-            try {
-                $this->assertThat($ex, $exceptionConstraint, 'The assertion failed not in the expected way.');
-            } catch (\Throwable $t) {
-                print $t; die;
-            }
+            $this->assertThat($ex, $exceptionConstraint, 'The assertion failed not in the expected way.');
             return;
         }
         $this->fail('The assertion should have failed, but did not.');
